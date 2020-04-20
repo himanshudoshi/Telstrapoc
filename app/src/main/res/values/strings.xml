@@ -1,3 +1,10 @@
-<resources>
-    <string name="app_name">Telstra_POC</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">TelstraDemo</string>
+    <string name="rowtitle" tools:keep="@string/rowtitle">row title</string>
+    <string name="description" tools:keep="@string/description">description</string>
+    <string name="imageurl" tools:keep="@string/imageurl">imageurl</string>
+    <string name="nodata" tools:keep="@string/rowtitle">No Data</string>
+    <string name="nodescription" tools:keep="@string/rowtitle">No Description</string>
+    <string name="telstra" tools:keep="@string/rowtitle">telstra.json</string>
+
 </resources>

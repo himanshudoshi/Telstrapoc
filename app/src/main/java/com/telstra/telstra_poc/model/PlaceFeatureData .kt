@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 
 /** data class to store data and to fetch the data.similar to plain object java class(POJO) */
 
-data class PlaceFatureData(
+data class PlaceFeatureData(
     @field:SerializedName("title")
     var title: String? = null,
     @SerializedName("rows")
-    val listItem: List<PlaceFatureItem>
+    val listItem: List<PlaceFeatureItem>
 )
 
-data class PlaceFatureItem(
+data class PlaceFeatureItem(
     @field:SerializedName("title")
     var title: String? = null,
     @field:SerializedName("description")

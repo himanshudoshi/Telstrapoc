@@ -1,7 +1,7 @@
 package com.telstra.telstra_poc
 
 import android.content.Context
-import com.telstra.telstra_poc.model.PlaceFatureData
+import com.telstra.telstra_poc.model.PlaceFeatureData
 
 class PlaceFeatureContractor {
 
@@ -9,7 +9,7 @@ class PlaceFeatureContractor {
     interface IMainView {
         fun getActivityContext(): Context?
         fun attachPresenter()
-        fun showListDetails(listData: PlaceFatureData)
+        fun showListDetails(listData: PlaceFeatureData)
         fun getPlaceFeatureItem()
          }
 

@@ -2,9 +2,13 @@ package com.telstra.telstra_poc.presenter
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.res.TypedArrayUtils
 import com.google.gson.GsonBuilder
 import com.telstra.telstra_poc.PlaceFeatureContractor
-import com.telstra.telstra_poc.model.PlaceFatureData
+import com.telstra.telstra_poc.R
+import com.telstra.telstra_poc.model.PlaceFeatureData
+
 import org.json.JSONException
 /** class work as a manager between view and model . */
 
@@ -26,18 +30,18 @@ class PlaceFeaturePresenter :
     override fun getListItems() {
         try {
             val gson = GsonBuilder().create()
-            val listData = gson.fromJson(loadJSONFromAsset(), PlaceFatureData::class.java)
+            val listData = gson.fromJson(loadJSONFromAsset(), PlaceFeatureData::class.java)
             mListItemView?.showListDetails(listData)
         }
 
         catch (e: JSONException) {
             //exception
-            Log.e("JsonException", "Exception" + e.printStackTrace())
+            Toast.makeText(mContext,mContext?.getString(R.string.noresponse),Toast.LENGTH_SHORT)?.show()
         }
     }
 
     fun loadJSONFromAsset(): String? {
-        return mContext?.assets?.open("telstra.json")?.bufferedReader()?.use { it.readText() }
+        return mContext?.assets?.open("placefeature.json")?.bufferedReader()?.use { it.readText() }
     }
 
 }

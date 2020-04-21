@@ -5,6 +5,8 @@
     <string name="imageurl" tools:keep="@string/imageurl">imageurl</string>
     <string name="nodata" tools:keep="@string/rowtitle">No Data</string>
     <string name="nodescription" tools:keep="@string/rowtitle">No Description</string>
-    <string name="telstra" tools:keep="@string/rowtitle">telstra.json</string>
+    <string name="placefeature" tools:keep="@string/rowtitle">placefeature.json</string>
+    <string name="noresponse" tools:keep="@string/rowtitle">No Response</string>
+    <string name="loading" tools:keep="@string/rowtitle">Please Wait</string>
 
 </resources>

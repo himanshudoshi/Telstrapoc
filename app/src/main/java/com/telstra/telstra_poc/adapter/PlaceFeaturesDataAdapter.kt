@@ -9,11 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.telstra.telstra_poc.R
-import com.telstra.telstra_poc.model.PlaceFatureData
+import com.telstra.telstra_poc.model.PlaceFeatureData
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class PlaceFeaturesDataAdapter(
-    private var context: Context,private var listData: PlaceFatureData
+    private var context: Context,private var listData: PlaceFeatureData
   ) : RecyclerView.Adapter<PlaceFeaturesDataAdapter.MyViewHolder>() {
     
     /** @Method initializing view and returning/inflating view  . */
@@ -33,14 +33,14 @@ class PlaceFeaturesDataAdapter(
         }
         else
         {
-            holder.rowtitle?.text = "No Title"
+            holder.rowtitle?.text = context?.getString(R.string.nodata)
         }
         if (!listData.listItem[position].description.isNullOrEmpty()) {
             holder.descriptions?.text = listData.listItem[position].description
         }
         else
         {
-            holder.descriptions?.text = "No Description"
+            holder.descriptions?.text = context?.getString(R.string.nodescription)
         }
         if (!listData.listItem[position].imageHref.isNullOrEmpty()) {
             Glide.with(holder.imageurls.context)
@@ -55,8 +55,10 @@ class PlaceFeaturesDataAdapter(
     /** @Method return item count . */
 
     override fun getItemCount(): Int {
-        //return the item count
-        return listData.listItem.size
+        if(!listData.listItem.isNullOrEmpty()){
+            return listData.listItem.size
+        }
+        return 0
     }
     /** @Method return view holder . */
 

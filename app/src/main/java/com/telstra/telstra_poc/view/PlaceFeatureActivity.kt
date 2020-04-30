@@ -1,17 +1,16 @@
-@file:Suppress("SpellCheckingInspection")
+@file:Suppress("SpellCheckingInspection", "DEPRECATION")
 
 package com.telstra.telstra_poc.view
 
-import android.Manifest
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telstra.telstra_poc.PlaceFeatureContractor
@@ -26,6 +25,7 @@ class PlaceFeatureActivity : AppCompatActivity(), PlaceFeatureContractor.IMainVi
     private lateinit var mPlaceFeaturePresenter: PlaceFeaturePresenter
     private var featuresDataAdapter: PlaceFeaturesDataAdapter? = null
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,18 +66,29 @@ class PlaceFeatureActivity : AppCompatActivity(), PlaceFeatureContractor.IMainVi
     }
 
     /** @Method to initiate data request . */
-    override fun getPlaceFeatureItem() {
-        mPlaceFeaturePresenter.getListItems()
-    }
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun isNetworkConnected(): Boolean {
-       val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = cm.activeNetwork
-        val networkCapabilities= cm.getNetworkCapabilities(activeNetwork)
-        return networkCapabilities != null &&
-                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-      //  return cm.isActiveNetworkMetered
-
+    override fun getPlaceFeatureItem() {
+        if (isNetworkConnected())
+        {
+            mPlaceFeaturePresenter.getListItems()
+        }else
+        {
+            loading.text =
+                getActivityContext()?.getString(R.string.device_not_connected_to_internet)
+        }
     }
+ @RequiresApi(Build.VERSION_CODES.M)
+ private fun isNetworkConnected(): Boolean {
+
+     val connectivityManager =
+         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+     //2
+     val activeNetwork = connectivityManager.activeNetwork
+     //3
+     val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+     //4
+     return networkCapabilities != null &&
+             networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+ }
 
 }

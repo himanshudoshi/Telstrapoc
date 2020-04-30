@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.*
+import com.bumptech.glide.Glide.with
 import com.telstra.telstra_poc.R
 import com.telstra.telstra_poc.model.PlaceFeatureData
 import kotlinx.android.synthetic.main.item_layout.view.*
-import java.net.UnknownHostException
 
 class PlaceFeaturesDataAdapter(private var context: Context,private var listData: PlaceFeatureData) : RecyclerView.Adapter<PlaceFeaturesDataAdapter.PlaceFeatureViewHolder>() {
     
@@ -47,10 +46,9 @@ class PlaceFeaturesDataAdapter(private var context: Context,private var listData
                             .error(R.drawable.ic_broken_image)
                             .fallback(R.drawable.ic_no_image)
                             .into(holder.imageurls)
-
             }
         } catch (e: Exception) {
-            Toast.makeText(context, context.getString(R.string.noresponse), Toast.LENGTH_SHORT)?.show()        }
+            Toast.makeText(context, context.getString(R.string.unknownexception), Toast.LENGTH_SHORT)?.show()        }
     }
     /** @Method return item count . */
 

@@ -11,7 +11,7 @@ class PlaceFeatureContractor {
         fun attachPresenter()
         fun showListDetails(listData: PlaceFeatureData)
         fun getPlaceFeatureItem()
-         }
+    }
 
     /** @interface implement by PlaceFeaturePresenter **/
     interface IMainPresenter {

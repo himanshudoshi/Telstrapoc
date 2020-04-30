@@ -2,9 +2,16 @@
 
 package com.telstra.telstra_poc.view
 
+import android.Manifest
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telstra.telstra_poc.PlaceFeatureContractor
@@ -29,6 +36,7 @@ class PlaceFeatureActivity : AppCompatActivity(), PlaceFeatureContractor.IMainVi
             getPlaceFeatureItem()
         }
     }
+
     /** @Method return application context  . */
 
     override fun getActivityContext(): Context? {
@@ -37,8 +45,8 @@ class PlaceFeatureActivity : AppCompatActivity(), PlaceFeatureContractor.IMainVi
 
     override fun showListDetails(listData: PlaceFeatureData) {
         featuresDataAdapter = PlaceFeaturesDataAdapter(this, listData)
-        if(!listData.title.isNullOrEmpty()) {
-            supportActionBar?.title = listData.title
+        when {
+            !listData.title.isNullOrEmpty() -> supportActionBar?.title = listData.title
         }
         getActivityContext()?.let {
             featuresDataAdapter = PlaceFeaturesDataAdapter(this, listData)
@@ -56,11 +64,20 @@ class PlaceFeatureActivity : AppCompatActivity(), PlaceFeatureContractor.IMainVi
         mPlaceFeaturePresenter = PlaceFeaturePresenter()
         mPlaceFeaturePresenter.attachView(this)
     }
-    /** @Method to initiate data request . */
 
+    /** @Method to initiate data request . */
     override fun getPlaceFeatureItem() {
         mPlaceFeaturePresenter.getListItems()
     }
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isNetworkConnected(): Boolean {
+       val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetwork
+        val networkCapabilities= cm.getNetworkCapabilities(activeNetwork)
+        return networkCapabilities != null &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+      //  return cm.isActiveNetworkMetered
 
+    }
 
 }
